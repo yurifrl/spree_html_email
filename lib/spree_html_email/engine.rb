@@ -1,6 +1,8 @@
 module SpreeHtmlEmail
   class Engine < Rails::Engine
+    require 'spree/core'
     engine_name 'spree_html_email'
+    isolate_namespace Spree
 
     config.autoload_paths += %W(#{config.root}/lib)
 

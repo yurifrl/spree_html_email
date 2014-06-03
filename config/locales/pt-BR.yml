@@ -1,0 +1,6 @@
+pt-BR:
+  digital_email_description: Links funcionam apenas por 24 horas e somente uma vez!
+
+  time:
+    formats:
+      short: "%B %d, %Y"
