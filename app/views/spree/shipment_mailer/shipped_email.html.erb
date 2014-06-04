@@ -2,7 +2,7 @@
   <%= t(:dear_customer, :default => "Dear %{name},", :name => @shipment.order.bill_address ? @shipment.order.bill_address.full_name : 'Customer') %>
 </p>
 <p class="overview">
-  Entrega realizada com sucesso </p>
+  Seu pedido foi enviado. </p>
 <p class="link">
   Para ver seu pedido com mais detalhes clique no link:
   <%= link_to(order_url(@shipment.order, :host => Spree::Config[:site_url]), order_url(@shipment.order, :host => Spree::Config[:site_url])) %>
@@ -14,5 +14,6 @@
     Informações de rastreamento:
     <%= @shipment.tracking %>
   </p>
+<% end %>
   <p class="thank-you">
     Obrigado. </p>
