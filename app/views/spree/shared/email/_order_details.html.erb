@@ -1,20 +1,20 @@
 <table id="order_summary" class="split">
   <tr>
-    <td>Number</td>
+    <td>Numero de identificação</td>
     <td><%= order.number %></td>
   </tr>
   <tr class="alt">
-    <td>Payment Method</td>
+    <td>Metodo de pagamento</td>
     <td><%= order.payments.collect {|p| p.payment_method.name }.join(', ') %></td>
   </tr>
   <% if order.canceled? %>
     <tr>
       <td>Status</td>
-      <td>Canceled</td>
+      <td>Cancleado</td>
     </tr>
   <% else %>
     <tr>
-      <td>Submitted</td>
+      <td>Enviado</td>
       <td><%= l(order.completed_at.to_date, :format => :short) %></td>
     </tr>
   <% end %>
@@ -23,26 +23,26 @@
 <table id="addresses">
   <tr>
     <td>
-      <h2><span><%= t(:billing_address) %></span></h2>
+      <h2><span><%= Spree.t(:billing_address) %></span></h2>
       <%= render :partial => 'spree/shared/email/address', :locals => {:address => order.bill_address} %>
     </td>
     <td>
-      <h2><span><%= t(:shipping_address) %></span></h2>
+      <h2><span><%= Spree.t(:shipping_address) %></span></h2>
       <%= render :partial => 'spree/shared/email/address', :locals => {:address => order.ship_address} %>
     </td>
   </tr>
 </table>
 
 <div class="spacer_15">&nbsp;</div>
-<h2><span>Order Details</span></h2>
+<h2><span>Detalhes do pedido</span></h2>
 
 <table id="order_details">
   <tbody id="line-items">
   <tr data-hook="order_details_line_items_headers">
-    <th><%= t(:items_purchased) %></th>
-    <th class="price number"><%= t(:price) %></th>
-    <th class="qty number"><%= t(:qty) %></th>
-    <th class="total number"><%= t(:total) %></th>
+    <th><%= Spree.t(:items_purchased) %></th>
+    <th class="price number"><%= Spree.t(:price) %></th>
+    <th class="qty number"><%= Spree.t(:qty) %></th>
+    <th class="total number"><%= Spree.t(:total) %></th>
   </tr>
   <% order.line_items.each do |item| %>
     <tr data-hook="order_details_line_item_row" class="<%= cycle('', 'alt') %>">
@@ -59,7 +59,7 @@
   <tbody id="subtotal" data-hook="order_details_subtotal">
   <tr id="subtotal-row">
     <td class="title" colspan="3">
-      <%= t(:subtotal) %>
+      <%= Spree.t(:subtotal) %>
     </td>
     <td class="total number">
       <%= number_to_currency order.item_total %>
@@ -82,7 +82,7 @@
   <tbody id="order-total" data-hook="order_details_total">
   <tr class="total">
     <td class="title" colspan="3">
-      <%= t(:order_total) %>
+      <%= Spree.t(:order_total) %>
     </td>
     <td class="total number">
       <span id="order_total"><%= number_to_currency order.total %></span>
@@ -95,8 +95,8 @@
   <% digital_items = @order.line_items.select{ |i| i.digital? } %>
   <% unless digital_items.empty? %>
     <div class="spacer_15">&nbsp;</div>
-    <h2><span><%= t(:digital_download_links) %></span></h2>
-    <p><%= t(:digital_email_description) %></p>
+    <h2><span><%= Spree.t(:digital_download_links) %></span></h2>
+    <p><%= Spree.t(:digital_email_description) %></p>
 
     <% digital_items.each do |item| %>
       <p><%= item.variant.name %>:<br/>
