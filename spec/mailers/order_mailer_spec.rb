@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe OrderMailer do
-  let(:order) { Factory(:order, 
-                        :completed_at => Time.now, 
-                        :bill_address => Factory(:address), 
+  let(:order) { Factory(:order,
+                        :completed_at => Time.now,
+                        :bill_address => Factory(:address),
                         :ship_address => Factory(:address)) }
 
   context "confirmation email" do
