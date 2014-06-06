@@ -5,18 +5,18 @@
   </tr>
   <tr class="alt">
     <td>Metodo de pagamento</td>
-    <td><%= order.payments.collect {|p| p.payment_method.name }.join(', ') %></td>
+    <td><%= order.payments.collect { |p| p.payment_method.name }.join(', ') %></td>
   </tr>
   <% if order.canceled? %>
-    <tr>
-      <td>Status</td>
-      <td>Cancleado</td>
-    </tr>
+      <tr>
+        <td>Status</td>
+        <td>Cancleado</td>
+      </tr>
   <% else %>
-    <tr>
-      <td>Enviado</td>
-      <td><%= l(order.completed_at.to_date, :format => :short) %></td>
-    </tr>
+      <tr>
+        <td>Enviado</td>
+        <td><%= l(order.completed_at.to_date, :format => :short) %></td>
+      </tr>
   <% end %>
 </table>
 
@@ -45,15 +45,15 @@
     <th class="total number"><%= Spree.t(:total) %></th>
   </tr>
   <% order.line_items.each do |item| %>
-    <tr data-hook="order_details_line_item_row" class="<%= cycle('', 'alt') %>">
-      <td class="name">
-        <%= item.variant.product.name %>
-        <%= "(" + item.variant.options_text + ")" unless item.variant .option_values.empty? %>
-      </td>
-      <td class="price number"><%= number_to_currency(item.price) %></td>
-      <td class="qty number"><%= item.quantity %></td>
-      <td class="total number"><%= number_to_currency(item.price * item.quantity) %></td>
-    </tr>
+      <tr data-hook="order_details_line_item_row" class="<%= cycle('', 'alt') %>">
+        <td class="name">
+          <%= item.variant.product.name %>
+          <%= "(" + item.variant.options_text + ")" unless item.variant.option_values.empty? %>
+        </td>
+        <td class="price number"><%= number_to_currency(item.price) %></td>
+        <td class="qty number"><%= item.quantity %></td>
+        <td class="total number"><%= number_to_currency(item.price * item.quantity) %></td>
+      </tr>
   <% end %>
   </tbody>
   <tbody id="subtotal" data-hook="order_details_subtotal">
@@ -68,15 +68,15 @@
   </tbody>
   <tbody id="order-charges" data-hook="order_details_adjustments">
   <% order.adjustments.eligible.each do |adjustment| %>
-    <% next if (adjustment.originator_type == "TaxRate") and (adjustment.amount == 0) %>
-    <tr class="total">
-      <td class="title" colspan="3">
-        <%= adjustment.label %>
-      </td>
-      <td class="total number">
-        <%= number_to_currency adjustment.amount %>
-      </td>
-    </tr>
+      <% next if (adjustment.originator_type == "TaxRate") and (adjustment.amount == 0) %>
+      <tr class="total">
+        <td class="title" colspan="3">
+          <%= adjustment.label %>
+        </td>
+        <td class="total number">
+          <%= number_to_currency adjustment.amount %>
+        </td>
+      </tr>
   <% end %>
   </tbody>
   <tbody id="order-total" data-hook="order_details_total">
@@ -92,21 +92,21 @@
 </table>
 
 <% if Rails.application.railties.map(&:railtie_name).include? 'spree_digital' %>
-  <% digital_items = @order.line_items.select{ |i| i.digital? } %>
-  <% unless digital_items.empty? %>
-    <div class="spacer_15">&nbsp;</div>
-    <h2><span><%= Spree.t(:digital_download_links) %></span></h2>
-    <p><%= Spree.t(:digital_email_description) %></p>
+    <% digital_items = @order.line_items.select { |i| i.digital? } %>
+    <% unless digital_items.empty? %>
+        <div class="spacer_15">&nbsp;</div>
+        <h2><span><%= Spree.t(:digital_download_links) %></span></h2>
+        <p><%= Spree.t(:digital_email_description) %></p>
 
-    <% digital_items.each do |item| %>
-      <p><%= item.variant.name %>:<br/>
-        <%
-           item.digital_links.each do |link|
-             digital_url = digital_url(:host => Spree::Config.get(:site_url), :secret => link.secret)
-        %>
-          <%= link_to digital_url, digital_url%>
-          </p>
+        <% digital_items.each do |item| %>
+            <p><%= item.variant.name %>:<br/>
+              <%
+                 item.digital_links.each do |link|
+                   digital_url = digital_url(:host => Spree::Config.get(:site_url), :secret => link.secret)
+              %>
+                  <%= link_to digital_url, digital_url %>
+                  </p>
+              <% end %>
         <% end %>
     <% end %>
-  <% end %>
 <% end %>
